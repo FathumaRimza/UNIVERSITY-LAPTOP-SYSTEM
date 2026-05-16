@@ -9,6 +9,7 @@ const {
   getMyReservations,
   approveReservation,
   rejectReservation,
+   returnLaptop
 } = require("../controllers/reservationController");
 
 
@@ -49,6 +50,13 @@ router.put(
   auth,
   role(["admin"]),
   rejectReservation
+);
+
+router.put(
+  "/:id/return",
+  auth,
+  role(["admin"]),
+  returnLaptop
 );
 
 module.exports = router;

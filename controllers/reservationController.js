@@ -153,3 +153,43 @@ exports.rejectReservation = async (req, res) => {
     });
   }
 };
+
+exports.returnLaptop = async (req, res) => {
+  try {
+
+    // Find reservation
+    const reservation = await Reservation.findById(req.params.id);
+
+    // Check reservation exists
+    if (!reservation) {
+      return res.status(404).json({
+        message: "Reservation not found"
+      });
+    }
+
+    // Change reservation status
+    reservation.status = "returned";
+
+    // Save reservation
+    await reservation.save();
+
+    // Find laptop using reservation laptop ID
+    const laptop = await Laptop.findById(reservation.laptop);
+
+    // Change laptop status
+    laptop.status = "available";
+
+    // Save laptop
+    await laptop.save();
+
+    // Send success response
+    res.json({
+      message: "Laptop returned successfully"
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    });
+  }
+};
