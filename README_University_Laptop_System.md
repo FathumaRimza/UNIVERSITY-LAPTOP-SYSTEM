@@ -47,6 +47,7 @@ university-laptop-system/
 │   └── reservationRoutes.js
 │
 ├── server.js
+├── seedAdmin.js
 ├── package.json
 └── .env
 ```
